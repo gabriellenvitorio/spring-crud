@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width" />
+	<title>Editar Multa</title>
+	<link th:href="@{/webjars/bootstrap/4.5.3/css/bootstrap.min.css}"
+		rel="stylesheet">
+</head>
+<body>
+	<div class="card" style="margin: 10px">
+		<div class="card-header">
+			<h1 class="card-title">Editar Multa Cadastrada - Gabriellen Vitório</h1>
+		</div>
+		<div class="card-body">
+			<form class="form-inline" method="POST" th:object="${multa}"
+				th:action="@{/multas}" style="margin: 20px 0">
+				<div class="form-group">
+					<input type="hidden" class="form-control" readOnly="readonly" th:field="*{id}"/>
+					<input type="text" class="form-control" placeholder="Placa" th:field="*{carro.placa}"/>
+					<input type="text" class="form-control" placeholder="Ano" th:field="*{ano}"/>
+					<input type="text" class="form-control" placeholder="Cidade" th:field="*{cidade}"/>
+					<select class="form-control" th:field="*{infracao.id}">
+						<option th:each="infracao:${infracoes}" th:value="${infracao.id}" th:text="${infracao.descricao}"></option>
+					</select>
+					<button type="submit" class="btn btn-primary">Salvar</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

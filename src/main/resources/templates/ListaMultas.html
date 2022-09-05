@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+	<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+	
+	<head>
+		<meta charset="UTF-8"/>
+		<meta name="viewport" content="width=device-width"/>
+		<title>Lista de Multas</title>
+		<link th:href="@{/webjars/bootstrap/4.5.3/css/bootstrap.min.css}" rel="stylesheet"/>
+	</head>
+	
+	<body>
+		<div th:insert="~{Menu :: menu}"></div>
+		
+		<div class="card" style="margin:10px">
+			<div class="card-header">
+				<h1 class="card-title">Lista de Multas Cadastradas - Gabriellen Vitório</h1>
+			</div>
+			
+			<div class="card-body"></div>
+			
+			<form class="form-inline" method="POST" th:object="${multa}"
+			th:action="@{/multas}" style="margin:20px 0">
+			
+				<div class="form-group">
+					<input type="text" class="form-control" placeholder="Placa" th:field="*{carro.placa}"/>
+					&nbsp;
+					<input type="text" class="form-control" placeholder="Ano" th:field="*{ano}"/>
+					&nbsp;
+					<input type="text" class="form-control" placeholder="Cidade" th:field="*{cidade}"/>
+					&nbsp;
+					<select class="form-control" th:field="*{infracao.id}">
+						<option th:each="infracao:${infracoes}" th:value="${infracao.id}" th:text="${infracao.descricao}"></option>
+					</select>
+					&nbsp;
+
+					<button type="submit" class="btn btn-primary"> Salvar </button>
+				</div>
+			</form>
+			
+			<table class="table">
+				<thead>
+					<tr>
+						<th>#</th>
+						<th>Placa do Carro</th>
+						<th>Ano</th>
+						<th>Cidade</th>
+						<th>Infração</th>
+						<th>Editar</th>
+						<th>Excluir</th>
+					</tr>
+				</thead>
+				
+				<tbody>
+					<tr th:each="multa:${multas}">
+						<td th:text="${multa.id}"></td>
+						<td th:text="${multa.carro.placa}"></td>
+						<td th:text="${multa.ano}"></td>
+						<td th:text="${multa.cidade}"></td>
+						<!-- Tem algum problema aqui em multa.infracao.descricao por isso comentei -->
+						<!-- <td th:text="${multa.infracao.descricao}"></td> -->
+						<td> <a class="btn btn-primary"
+								th:href="@{/multa/{id}(id=${multa.id})}">Editar
+							</a>
+						</td>
+						<td> <a class="btn btn-danger"
+								th:href="@{/multa/deletar/{id}(id=${multa.id})}">Excluir
+							</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			
+		</div>
+	</body>
+</html>
